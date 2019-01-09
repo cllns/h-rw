@@ -1,0 +1,3 @@
+project=real_world
+test=rspec
+template=erb
