@@ -15,6 +15,9 @@ end
 
 group :test, :development do
   gem 'dotenv', '~> 2.4'
+
+  gem 'rubocop', '~> 0.68'
+  gem 'rubocop-performance'
 end
 
 group :test do
