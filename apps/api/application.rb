@@ -1,6 +1,6 @@
 module Api
   class Application < Hanami::Application
-    configure do
+    configure do # rubocop:disable Metrics/BlockLength
       ##
       # BASIC
       #
@@ -16,7 +16,7 @@ module Api
       # When you add new directories, remember to add them here.
       #
       load_paths << [
-        'controllers',
+        'controllers'
       ]
 
       # Handle exceptions with HTTP statuses (true) or don't catch them (false).
@@ -179,7 +179,7 @@ module Api
       #
       #  * https://developer.mozilla.org/en-US/docs/Web/Security/CSP/CSP_policy_directives
       #
-      security.content_security_policy %{
+      security.content_security_policy %(
         form-action 'self';
         frame-ancestors 'self';
         base-uri 'self';
@@ -194,7 +194,7 @@ module Api
         child-src 'self';
         frame-src 'self';
         media-src 'self'
-      }
+      )
 
       ##
       # FRAMEWORKS

@@ -1,2 +1,4 @@
 inherit_from:
 - https://raw.githubusercontent.com/hanami/devtools/master/.rubocop.yml
+Style/Documentation:
+  Enabled: false
