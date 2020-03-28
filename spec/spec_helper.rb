@@ -1,7 +1,7 @@
 # Require this file for unit tests
-ENV['HANAMI_ENV'] ||= 'test'
+ENV["HANAMI_ENV"] ||= "test"
 
-require_relative '../config/environment'
+require_relative "../config/environment"
 Hanami.boot
 Hanami::Utils.require!("#{__dir__}/support")
 

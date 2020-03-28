@@ -1,11 +1,11 @@
-require 'bundler/setup'
-require 'hanami/setup'
-require 'hanami/model'
-require_relative '../lib/real_world'
-require_relative '../apps/api/application'
+require "bundler/setup"
+require "hanami/setup"
+require "hanami/model"
+require_relative "../lib/real_world"
+require_relative "../apps/api/application"
 
 Hanami.configure do
-  mount Api::Application, at: '/'
+  mount Api::Application, at: "/"
 
   model do
     ##
@@ -18,17 +18,17 @@ Hanami.configure do
     #    adapter :sql, 'postgresql://localhost/real_world_development'
     #    adapter :sql, 'mysql://localhost/real_world_development'
     #
-    adapter :sql, ENV.fetch('DATABASE_URL')
+    adapter :sql, ENV.fetch("DATABASE_URL")
 
     ##
     # Migrations
     #
-    migrations 'db/migrations'
-    schema     'db/schema.sql'
+    migrations "db/migrations"
+    schema     "db/schema.sql"
   end
 
   mailer do
-    root 'lib/real_world/mailers'
+    root "lib/real_world/mailers"
 
     # See http://hanamirb.org/guides/mailers/delivery
     delivery :test
@@ -43,7 +43,7 @@ Hanami.configure do
     logger level: :info, formatter: :json, filter: []
 
     mailer do
-      delivery :smtp, address: ENV.fetch('SMTP_HOST'), port: ENV.fetch('SMTP_PORT')
+      delivery :smtp, address: ENV.fetch("SMTP_HOST"), port: ENV.fetch("SMTP_PORT")
     end
   end
 end
