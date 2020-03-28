@@ -4,18 +4,29 @@ module Api
       class Create
         include Api::Action
 
+        params do
+          required(:user).schema do
+            required(:email).filled(:str?)
+            required(:username).filled(:str?)
+            required(:password).filled(:str?)
+          end
+        end
+
         def call(_params)
-          self.body = Hash[
-            user: user_hash
-          ].to_json
+          if params.valid?
+            self.body = Hash[user: user_hash].to_json
+          else
+            self.status = 422
+            self.body = Hash[errors: params.errors.to_h].to_json
+          end
         end
 
         private
 
         def user_hash
           Hash[
-            email: "",
-            username: "",
+            email: params.dig(:user, :email),
+            username: params.dig(:user, :username),
             bio: "",
             image: "",
             token: "",
