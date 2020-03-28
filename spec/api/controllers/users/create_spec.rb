@@ -58,5 +58,14 @@ RSpec.describe Api::Controllers::Users::Create, type: :action do
         image: nil
       )
     end
+
+    it "stores the password with bcrypt" do
+      expect(BCrypt::Password).to receive(:create).with("password").and_call_original
+      response
+      last_user = UserRepository.new.last
+      expect(
+        BCrypt::Password.new(last_user.encrypted_password)
+      ).to eq("password")
+    end
   end
 end

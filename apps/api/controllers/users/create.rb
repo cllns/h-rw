@@ -32,8 +32,13 @@ module Api
         def create_user
           UserRepository.new.create(
             email: params.dig(:user, :email),
-            username: params.dig(:user, :username)
+            username: params.dig(:user, :username),
+            encrypted_password: bcrypted_password
           )
+        end
+
+        def bcrypted_password
+          BCrypt::Password.create(params.dig(:user, :password))
         end
       end
     end
