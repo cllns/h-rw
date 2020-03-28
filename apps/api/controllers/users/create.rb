@@ -24,13 +24,16 @@ module Api
         private
 
         def user_hash
-          Hash[
+          create_user.to_hash.slice(
+            :email, :username, :bio, :image
+          ).merge(token: "")
+        end
+
+        def create_user
+          UserRepository.new.create(
             email: params.dig(:user, :email),
-            username: params.dig(:user, :username),
-            bio: "",
-            image: "",
-            token: "",
-          ]
+            username: params.dig(:user, :username)
+          )
         end
       end
     end

@@ -3,6 +3,8 @@ RSpec.describe Api::Controllers::Users::Create, type: :action do
   let(:response) { action.call(params) }
   let(:body) { JSON.parse(response[2][0]) }
 
+  before { UserRepository.new.clear }
+
   describe "with invalid params" do
     let(:params) { Hash[] }
 
@@ -41,8 +43,20 @@ RSpec.describe Api::Controllers::Users::Create, type: :action do
     end
 
     it "has appropriate response" do
-      expect(body["user"]).to include("email" => "test@example.com")
-      expect(body["user"]).to include("username" => "tester")
+      expect(body["user"]).to include(
+        "email" => "test@example.com",
+        "username" => "tester"
+      )
+    end
+
+    it "persists the User" do
+      response # to actually make the request
+      expect(UserRepository.new.last.to_h).to include(
+        email: "test@example.com",
+        username: "tester",
+        bio: nil,
+        image: nil
+      )
     end
   end
 end
