@@ -5,7 +5,7 @@ module Api
         include Api::Action
 
         def call(_params)
-          self.body = '{}'
+          self.body = Hash[user: {}].to_json
         end
       end
     end

@@ -1,1 +1,1 @@
-post '/users', to: 'users#create'
+post "/users", to: "users#create"
