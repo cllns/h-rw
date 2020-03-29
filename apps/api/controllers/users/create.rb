@@ -24,9 +24,7 @@ module Api
         private
 
         def user_hash
-          create_user.to_hash.slice(
-            :email, :username, :bio, :image
-          ).merge(token: "")
+          UserPresenter.new(create_user).to_hash
         end
 
         def create_user
