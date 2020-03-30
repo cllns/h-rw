@@ -35,18 +35,13 @@ RSpec.describe Api::Controllers::Users::Create, type: :action do
       expect(response[0]).to eq 200
     end
 
-    it "has appropriate response keys" do
-      expect(body.keys).to eq(["user"])
-      expect(body["user"].keys).to match_array(
-        %w[email username bio image token]
-      )
-    end
-
     it "has appropriate response" do
+      expect(body.keys).to eq(["user"])
       expect(body["user"]).to include(
         "email" => "test@example.com",
         "username" => "tester"
       )
+      expect(body).to have_correct_json_web_token
     end
 
     it "persists the User" do

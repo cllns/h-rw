@@ -42,14 +42,8 @@ RSpec.describe Api::Controllers::Sessions::Create, type: :action do
       expect(response[0]).to eq 200
     end
 
-    it "has appropriate response keys" do
-      expect(body.keys).to eq(["user"])
-      expect(body["user"].keys).to match_array(
-        %w[email username bio image token]
-      )
-    end
-
     it "has appropriate response" do
+      expect(body.keys).to eq(["user"])
       expect(body["user"]).to match(
         "email" => "test@example.com",
         "username" => "tester",
@@ -57,6 +51,7 @@ RSpec.describe Api::Controllers::Sessions::Create, type: :action do
         "bio" => nil,
         "image" => nil
       )
+      expect(body).to have_correct_json_web_token
     end
   end
 end
