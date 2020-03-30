@@ -42,10 +42,20 @@ RSpec.describe Api::Controllers::Sessions::Create, type: :action do
       expect(response[0]).to eq 200
     end
 
+    it "has appropriate response keys" do
+      expect(body.keys).to eq(["user"])
+      expect(body["user"].keys).to match_array(
+        %w[email username bio image token]
+      )
+    end
+
     it "has appropriate response" do
-      expect(body["user"]).to include(
+      expect(body["user"]).to match(
         "email" => "test@example.com",
-        "username" => "tester"
+        "username" => "tester",
+        "token" => /.+/,
+        "bio" => nil,
+        "image" => nil
       )
     end
   end
