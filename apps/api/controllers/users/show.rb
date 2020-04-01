@@ -4,6 +4,8 @@ module Api
       class Show
         include Api::Action
 
+        before :authenticate!
+
         def call(_params)
           self.body = Hash[user: user_hash].to_json
         end

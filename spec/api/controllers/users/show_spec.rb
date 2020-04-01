@@ -38,7 +38,38 @@ RSpec.describe Api::Controllers::Users::Show, type: :action do
         "image" => nil,
         "token" => /.+/
       )
-      expect(body["user"]["token"]).to match(/.+/)
+    end
+  end
+
+  describe "with invalid Authorization HTTP header" do
+    let(:params) do
+      Hash["HTTP_AUTHORIZATION" => "Token #{authorization_token} x-y-z!"]
+    end
+
+    it "returns at 400: Bad Request" do
+      response = action.call(params)
+      expect(response[0]).to eq 400
+      expect(response[2][0]).to eq("Bad Request")
+    end
+  end
+
+  describe "with missing Authorization HTTP header" do
+    let(:params) { Hash[] }
+
+    it "returns at 401: Unauthorized" do
+      response = action.call(params)
+      expect(response[0]).to eq 401
+      expect(response[2][0]).to eq("Unauthorized")
+    end
+  end
+
+  describe "with an empty Authorization HTTP header" do
+    let(:params) { Hash["HTTP_AUTHORIZATION" => ""] }
+
+    it "returns at 401: Unauthorized" do
+      response = action.call(params)
+      expect(response[0]).to eq 401
+      expect(response[2][0]).to eq("Unauthorized")
     end
   end
 end
