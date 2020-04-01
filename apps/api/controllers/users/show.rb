@@ -5,13 +5,13 @@ module Api
         include Api::Action
 
         def call(_params)
-          self.body = Hash["Token" => authorization_token].to_json
+          self.body = Hash[user: user_hash].to_json
         end
 
         private
 
-        def authorization_token
-          params.env["HTTP_AUTHORIZATION"]
+        def user_hash
+          UserPresenter.new(UserRepository.new.find(current_user_id)).to_hash
         end
       end
     end

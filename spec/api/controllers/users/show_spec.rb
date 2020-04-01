@@ -31,7 +31,13 @@ RSpec.describe Api::Controllers::Users::Show, type: :action do
     it "is successful" do
       response = action.call(params)
       expect(response[0]).to eq 200
-      expect(body["Token"]).to eq("Token #{authorization_token}")
+      expect(body["user"]).to include(
+        "email" => "test@example.com",
+        "username" => "tester",
+        "bio" => nil,
+        "image" => nil
+      )
+      expect(body["user"]["token"]).to match(/.+/)
     end
   end
 end

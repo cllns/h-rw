@@ -207,6 +207,14 @@ module Api
       controller.prepare do
         # include MyAuthentication # included in all the actions
         # before :authenticate!    # run an authentication before callback
+        def current_user_id
+          JWT.decode(
+            params.env["HTTP_AUTHORIZATION"].split(" ").last,
+            API_SESSIONS_SECRET,
+            true,
+            { algorithm: "HS512" }
+          ).first["user_id"]
+        end
       end
     end
 
