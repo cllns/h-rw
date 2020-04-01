@@ -37,9 +37,12 @@ RSpec.describe Api::Controllers::Users::Create, type: :action do
 
     it "has appropriate response" do
       expect(body.keys).to eq(["user"])
-      expect(body["user"]).to include(
+      expect(body["user"]).to match(
         "email" => "test@example.com",
-        "username" => "tester"
+        "username" => "tester",
+        "bio" => nil,
+        "image" => nil,
+        "token" => /.+/
       )
       expect(body).to have_correct_json_web_token
     end

@@ -28,14 +28,15 @@ RSpec.describe Api::Controllers::Users::Show, type: :action do
       Hash["HTTP_AUTHORIZATION" => "Token #{authorization_token}"]
     end
 
-    it "is successful" do
+    it "has appropriate response" do
       response = action.call(params)
       expect(response[0]).to eq 200
-      expect(body["user"]).to include(
+      expect(body["user"]).to match(
         "email" => "test@example.com",
         "username" => "tester",
         "bio" => nil,
-        "image" => nil
+        "image" => nil,
+        "token" => /.+/
       )
       expect(body["user"]["token"]).to match(/.+/)
     end
