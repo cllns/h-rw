@@ -24,6 +24,7 @@ group :test, :development do
 end
 
 group :test do
+  gem "rack-test"
   gem "rspec"
 end
 
