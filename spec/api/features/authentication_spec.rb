@@ -27,39 +27,45 @@ RSpec.describe "Authentication", type: :feature do
     )
   end
 
-  describe "correct Authorization header" do
-    before { header "Authorization", "Token #{authorization_token}" }
+  Hash[
+    get: "/user",
+  ].each do |verb, path|
+    describe "#{verb} #{path}" do
+      describe "correct header" do
+        before { header "Authorization", "Token #{authorization_token}" }
 
-    it do
-      get "/user"
-      expect(last_response).to be_ok
-    end
-  end
+        it do
+          custom_request verb, path
+          expect(last_response).to_not be_unauthorized
+        end
+      end
 
-  describe "incorrect Authorization header" do
-    before { header "Authorization", "Token a-totally-wrong-token" }
+      describe "incorrect header" do
+        before { header "Authorization", "Token a-totally-wrong-token" }
 
-    it do
-      get "/user"
-      expect(last_response).to be_bad_request
-    end
-  end
+        it do
+          custom_request verb, path
+          expect(last_response).to be_bad_request
+        end
+      end
 
-  describe "empty Authorization header" do
-    before { header "Authorization", "" }
+      describe "empty header" do
+        before { header "Authorization", "" }
 
-    it do
-      get "/user"
-      expect(last_response).to be_unauthorized
-    end
-  end
+        it do
+          custom_request verb, path
+          expect(last_response).to be_unauthorized
+        end
+      end
 
-  describe "missing Authorization header" do
-    # No `before` block setting the header
+      describe "missing header" do
+        # No `before` block setting the header
 
-    it do
-      get "/user"
-      expect(last_response).to be_unauthorized
+        it do
+          custom_request verb, path
+          expect(last_response).to be_unauthorized
+        end
+      end
     end
   end
 end
