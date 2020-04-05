@@ -29,6 +29,7 @@ RSpec.describe "Authentication", type: :feature do
 
   Hash[
     get: "/user",
+    put: "/user"
   ].each do |verb, path|
     describe "#{verb} #{path}" do
       describe "correct header" do
