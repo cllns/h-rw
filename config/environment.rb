@@ -27,13 +27,6 @@ Hanami.configure do
     schema     "db/schema.sql"
   end
 
-  mailer do
-    root "lib/real_world/mailers"
-
-    # See http://hanamirb.org/guides/mailers/delivery
-    delivery :test
-  end
-
   environment :development do
     # See: http://hanamirb.org/guides/projects/logging
     logger level: :debug
