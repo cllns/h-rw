@@ -13,7 +13,11 @@ RSpec.configure do |config|
   config.formatter = ENV["CI"] == "true" ? :progress : :documentation
   config.order = :random
   config.shared_context_metadata_behavior = :apply_to_host_groups
-  config.warnings = true
+
+  # Hanami v1.3 depends on some older gems that have warnings for newer Rubies
+  # They won't be updated, but we want warnings when we upgrade to Hanami v2.0
+  # TODO: Change this value to `true` once we upgrade this repo.
+  config.warnings = Hanami::Version.version >= "2.0.0"
 
   config.expect_with :rspec do |expectations|
     expectations.syntax = :expect
