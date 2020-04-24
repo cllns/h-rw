@@ -23,8 +23,8 @@ if this were a real project and we needed a place for new functionality.
 
 For more info, [read the Hanami Architecture Guide](http://guides.hanamirb.org/architecture/overview/).
 
-# Getting started
 
+# Getting started
 
 1. Clone this repository
 
@@ -34,7 +34,7 @@ For more info, [read the Hanami Architecture Guide](http://guides.hanamirb.org/a
 bundle install
 ```
 
-3. Prepare (create and migrate) the server
+3. Prepare (create and migrate) the database for the **development** environment
 
 ```shell
  bundle exec hanami db prepare
@@ -47,3 +47,22 @@ bundle exec hanami server
 ```
 
 Your API server will now be serving from port *2300* at `http://localhost:2300`.
+
+
+# Tests
+
+This application has strong test coverage, with RSpec.
+
+1. Prepare (create and migrate) the database for the **test** environment
+
+```shell
+HANAMI_ENV=test bundle exec hanami db prepare
+```
+
+2. Run the entire test suite
+
+```shell
+bundle exec rake
+```
+
+(You can also run a single spec with `bundle exec rspec` and the path of the spec file)
